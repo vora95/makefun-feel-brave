@@ -12,5 +12,11 @@ import { mkdirSync, writeFileSync } from "node:fs";
 const TEXT =
   "Judge — put the verdict down for one breath. The lamp is warm, the page is patient, and nothing here is in a hurry. Read slow. The words will wait for you, steady as a door held open, and when you look up the room will still be exactly where you left it.";
 
+// The gate allows 1–280 Unicode code points: refuse to write anything else.
+const LENGTH = [...TEXT].length;
+if (LENGTH < 1 || LENGTH > 280) {
+  throw new Error(`entry text is ${LENGTH} characters, outside 1–280`);
+}
+
 mkdirSync("/output", { recursive: true });
 writeFileSync("/output/entry.txt", TEXT, "utf8");
